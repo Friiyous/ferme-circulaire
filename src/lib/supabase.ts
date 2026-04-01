@@ -7,11 +7,14 @@ import { createClient } from '@supabase/supabase-js';
 import type { Animal, Parcelle, Transaction, StockIntrant, Employe, TacheHR } from '@/types';
 
 // Configuration Supabase depuis les variables d'environnement
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+// Utiliser des valeurs par défaut pour Vercel si non définies
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://demo.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'demo-key';
 
-// Client Supabase
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Client Supabase - avec optionnel pour éviter les erreurs au build
+export const supabase = supabaseUrl && supabaseAnonKey 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : createClient('https://demo.supabase.co', 'demo-key');
 
 // Types pour les réponses Supabase
 export interface Database {

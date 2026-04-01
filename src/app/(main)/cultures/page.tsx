@@ -7,7 +7,6 @@ import {
 } from 'antd';
 import { PlusOutlined, DeleteOutlined, ReloadOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import { mockParcelles } from '@/lib/mockData';
 import { colors } from '@/lib/theme';
 import type { Parcelle, StatutParcelle } from '@/types';
 import { parcellesService, type Parcelle as DbParcelle } from '@/lib/crudService';
@@ -42,25 +41,16 @@ export default function CulturesPage() {
 
   useEffect(() => { loadParcelles(); }, []);
 
-  // Gestion du calendrier de rotation (placeholder pour chaque parcelle)
-  const handleRotationClick = (parcelleId: string) => {
-    console.log('Rotation planning for:', parcelleId);
-  };
-
   const loadParcelles = async () => {
     setLoading(true);
     let local = loadLocal();
     
-    if (local.length === 0) {
-      local = mockParcelles.slice(0, 4).map((p, i) => ({
-        ...p,
-        id: `seed-${Date.now()}-${i}`,
-      }));
-      saveLocal(local);
-    }
+    // PLUS de rechargement automatique depuis mockParcelles
+    // Si vide, on laisse vide pour que l'utilisateur ajoute ses donnees
     
     setData(local);
     
+    // Charger depuis Supabase si configure
     try {
       const { data: supaData } = await parcellesService.getAll();
       if (supaData && supaData.length > 0) {
@@ -164,33 +154,34 @@ export default function CulturesPage() {
         </Button>
       </div>
 
+      {/* Stats dynamiques - basées sur les donnees reales */}
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         <Col xs={12} lg={6}>
           <Card style={{ textAlign: 'center', borderRadius: 12 }}>
-            <div style={{ fontSize: 28, marginBottom: 4 }}>🌽</div>
-            <Statistic title="Maïs" value="2 500 m²" valueStyle={{ fontWeight: 700, color: colors.warning }} />
-            <Text type="secondary" style={{ fontSize: 11 }}>Production: 1 800 kg/an</Text>
+            <div style={{ fontSize: 28, marginBottom: 4 }}>📊</div>
+            <Statistic title="Total Parcelles" value={data.length} valueStyle={{ fontWeight: 700, color: colors.primary }} />
+            <Text type="secondary" style={{ fontSize: 11 }}>Enregistrees</Text>
           </Card>
         </Col>
         <Col xs={12} lg={6}>
           <Card style={{ textAlign: 'center', borderRadius: 12 }}>
-            <div style={{ fontSize: 28, marginBottom: 4 }}>🫘</div>
-            <Statistic title="Niébé" value="1 200 m²" valueStyle={{ fontWeight: 700, color: colors.success }} />
-            <Text type="secondary" style={{ fontSize: 11 }}>Protéine + fixation azote</Text>
+            <div style={{ fontSize: 28, marginBottom: 4 }}>📐</div>
+            <Statistic title="Surface Totale" value={totalSurface} valueStyle={{ fontWeight: 700, color: colors.warning }} suffix="m²" />
+            <Text type="secondary" style={{ fontSize: 11 }}>Superficie totale</Text>
           </Card>
         </Col>
         <Col xs={12} lg={6}>
           <Card style={{ textAlign: 'center', borderRadius: 12 }}>
-            <div style={{ fontSize: 28, marginBottom: 4 }}>🌾</div>
-            <Statistic title="Brachiaria" value="3 500 m²" valueStyle={{ fontWeight: 700, color: colors.info }} />
-            <Text type="secondary" style={{ fontSize: 11 }}>Fourrage pour chèvres</Text>
+            <div style={{ fontSize: 28, marginBottom: 4 }}>🌱</div>
+            <Statistic title="En Culture" value={enCulture} valueStyle={{ fontWeight: 700, color: colors.success }} />
+            <Text type="secondary" style={{ fontSize: 11 }}>Parcelles actives</Text>
           </Card>
         </Col>
         <Col xs={12} lg={6}>
           <Card style={{ textAlign: 'center', borderRadius: 12 }}>
-            <div style={{ fontSize: 28, marginBottom: 4 }}>🔄</div>
-            <Statistic title="Rotation" value="Actif" valueStyle={{ fontWeight: 700 }} />
-            <Text type="secondary" style={{ fontSize: 11 }}>Maïs → Niéré ← Brachiaria</Text>
+            <div style={{ fontSize: 28, marginBottom: 4 }}>🏜️</div>
+            <Statistic title="Inactives" value={data.length - enCulture} valueStyle={{ fontWeight: 700 }} />
+            <Text type="secondary" style={{ fontSize: 11 }}>Jachere/Preparation</Text>
           </Card>
         </Col>
       </Row>
@@ -199,7 +190,16 @@ export default function CulturesPage() {
         <Table columns={columns} dataSource={data} rowKey="id" pagination={{ pageSize: 8 }} />
       </Card>
 
-      <Modal title="🌱 Nouvelle parcelle" open={addModalOpen} onCancel={() => { setAddModalOpen(false); form.resetFields(); }} onOk={handleAdd} okText="Créer" cancelText="Annuler">
+      {/* Message si vide */}
+      {data.length === 0 && (
+        <Card style={{ marginTop: 16, textAlign: 'center', borderRadius: 12 }}>
+          <Text type="secondary" style={{ fontSize: 16 }}>
+            Aucune parcelle enregistree. Cliquez sur "Nouvelle parcelle" pour commencer.
+          </Text>
+        </Card>
+      )}
+
+      <Modal title="🌱 Nouvelle parcelle" open={addModalOpen} onCancel={() => { setAddModalOpen(false); form.resetFields(); }} onOk={handleAdd} okText="Creer" cancelText="Annuler">
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
           <Row gutter={16}>
             <Col span={12}>
@@ -214,15 +214,15 @@ export default function CulturesPage() {
             </Col>
             <Col span={12}>
               <Form.Item name="culture" label="Culture actuelle">
-                <Input placeholder="Ex: Maïs" />
+                <Input placeholder="Ex: Mais" />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item name="statut" label="Statut">
                 <Select defaultValue="en_culture">
                   <Option value="en_culture">🌱 En culture</Option>
-                  <Option value="fallow">🏜️ Jachère</Option>
-                  <Option value="prepare">⛏️ Préparation</Option>
+                  <Option value="fallow">🏜️ Jachere</Option>
+                  <Option value="prepare">⛏️ Preparation</Option>
                 </Select>
               </Form.Item>
             </Col>

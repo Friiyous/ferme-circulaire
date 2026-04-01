@@ -1,9 +1,8 @@
 'use client';
 import MainLayout from '@/components/MainLayout';
-import { ConfigProvider } from 'antd';
-import { farmTheme } from '@/lib/theme';
-import frFR from 'antd/locale/fr_FR';
 import { Suspense } from 'react';
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import frFR from 'antd/locale/fr_FR';
 
 // Loading skeleton component
 function LayoutLoading() {
@@ -37,10 +36,8 @@ function LayoutLoading() {
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ConfigProvider theme={farmTheme} locale={frFR}>
-      <Suspense fallback={<LayoutLoading />}>
-        <MainLayout>{children}</MainLayout>
-      </Suspense>
-    </ConfigProvider>
+    <ThemeProvider>
+      <MainLayout>{children}</MainLayout>
+    </ThemeProvider>
   );
 }

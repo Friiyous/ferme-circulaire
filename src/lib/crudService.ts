@@ -1,12 +1,13 @@
 /**
- * Service CRUD simplifié - Sans cache interne
- * Les pages gèrent她们自己的 localStorage
+ * Service CRUD - Supabase optionnel (pas d'erreur si non configure)
  */
 import { supabase } from './supabase';
 
+// Verifier si Supabase est configure
+const isConfigured = () => supabase !== null;
+
 export type TableName = 'animals' | 'parcelles' | 'transactions' | 'stocks' | 'employees' | 'tasks' | 'alerts';
 
-// Types pour les données
 export interface Animal {
   id?: string;
   code: string;
@@ -64,15 +65,11 @@ export interface Parcelle {
   created_at?: string;
 }
 
-// Service simple sans cache interne
 export const animalsService = {
   async create(data: Omit<Animal, 'id' | 'created_at'>): Promise<{ data: Animal | null; error: unknown }> {
+    if (!isConfigured()) return { data: null, error: 'Supabase not configured' };
     try {
-      const { data: result, error } = await supabase
-        .from('animals')
-        .insert(data as Record<string, unknown>)
-        .select()
-        .single();
+      const { data: result, error } = await supabase.from('animals').insert(data as Record<string, unknown>).select().single();
       if (error) return { data: null, error: error.message };
       return { data: result as Animal, error: null };
     } catch (err: unknown) {
@@ -81,11 +78,9 @@ export const animalsService = {
   },
   
   async getAll(): Promise<{ data: Animal[]; error: unknown }> {
+    if (!isConfigured()) return { data: [], error: 'Supabase not configured' };
     try {
-      const { data, error } = await supabase
-        .from('animals')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data, error } = await supabase.from('animals').select('*').order('created_at', { ascending: false });
       if (error) return { data: [], error: error.message };
       return { data: (data || []) as Animal[], error: null };
     } catch (err: unknown) {
@@ -94,11 +89,9 @@ export const animalsService = {
   },
   
   async delete(id: string): Promise<{ success: boolean; error: unknown }> {
+    if (!isConfigured()) return { success: false, error: 'Supabase not configured' };
     try {
-      const { error } = await supabase
-        .from('animals')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('animals').delete().eq('id', id);
       return { success: !error, error: error?.message || null };
     } catch (err: unknown) {
       return { success: false, error: err instanceof Error ? err.message : 'Erreur' };
@@ -108,12 +101,9 @@ export const animalsService = {
 
 export const transactionsService = {
   async create(data: Omit<Transaction, 'id' | 'created_at'>): Promise<{ data: Transaction | null; error: unknown }> {
+    if (!isConfigured()) return { data: null, error: 'Supabase not configured' };
     try {
-      const { data: result, error } = await supabase
-        .from('transactions')
-        .insert(data as Record<string, unknown>)
-        .select()
-        .single();
+      const { data: result, error } = await supabase.from('transactions').insert(data as Record<string, unknown>).select().single();
       return { data: result as Transaction, error };
     } catch (err: unknown) {
       return { data: null, error: err instanceof Error ? err.message : 'Erreur' };
@@ -121,11 +111,9 @@ export const transactionsService = {
   },
   
   async getAll(): Promise<{ data: Transaction[]; error: unknown }> {
+    if (!isConfigured()) return { data: [], error: 'Supabase not configured' };
     try {
-      const { data, error } = await supabase
-        .from('transactions')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data, error } = await supabase.from('transactions').select('*').order('created_at', { ascending: false });
       return { data: (data || []) as Transaction[], error };
     } catch (err: unknown) {
       return { data: [], error: err instanceof Error ? err.message : 'Erreur' };
@@ -133,11 +121,9 @@ export const transactionsService = {
   },
   
   async delete(id: string): Promise<{ success: boolean; error: unknown }> {
+    if (!isConfigured()) return { success: false, error: 'Supabase not configured' };
     try {
-      const { error } = await supabase
-        .from('transactions')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('transactions').delete().eq('id', id);
       return { success: !error, error: error?.message || null };
     } catch (err: unknown) {
       return { success: false, error: err instanceof Error ? err.message : 'Erreur' };
@@ -147,12 +133,9 @@ export const transactionsService = {
 
 export const stocksService = {
   async create(data: Omit<Stock, 'id' | 'created_at'>): Promise<{ data: Stock | null; error: unknown }> {
+    if (!isConfigured()) return { data: null, error: 'Supabase not configured' };
     try {
-      const { data: result, error } = await supabase
-        .from('stocks')
-        .insert(data as Record<string, unknown>)
-        .select()
-        .single();
+      const { data: result, error } = await supabase.from('stocks').insert(data as Record<string, unknown>).select().single();
       return { data: result as Stock, error };
     } catch (err: unknown) {
       return { data: null, error: err instanceof Error ? err.message : 'Erreur' };
@@ -160,11 +143,9 @@ export const stocksService = {
   },
   
   async getAll(): Promise<{ data: Stock[]; error: unknown }> {
+    if (!isConfigured()) return { data: [], error: 'Supabase not configured' };
     try {
-      const { data, error } = await supabase
-        .from('stocks')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data, error } = await supabase.from('stocks').select('*').order('created_at', { ascending: false });
       return { data: (data || []) as Stock[], error };
     } catch (err: unknown) {
       return { data: [], error: err instanceof Error ? err.message : 'Erreur' };
@@ -172,11 +153,9 @@ export const stocksService = {
   },
   
   async delete(id: string): Promise<{ success: boolean; error: unknown }> {
+    if (!isConfigured()) return { success: false, error: 'Supabase not configured' };
     try {
-      const { error } = await supabase
-        .from('stocks')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('stocks').delete().eq('id', id);
       return { success: !error, error: error?.message || null };
     } catch (err: unknown) {
       return { success: false, error: err instanceof Error ? err.message : 'Erreur' };
@@ -186,12 +165,9 @@ export const stocksService = {
 
 export const employeesService = {
   async create(data: Omit<Employee, 'id' | 'created_at'>): Promise<{ data: Employee | null; error: unknown }> {
+    if (!isConfigured()) return { data: null, error: 'Supabase not configured' };
     try {
-      const { data: result, error } = await supabase
-        .from('employees')
-        .insert(data as Record<string, unknown>)
-        .select()
-        .single();
+      const { data: result, error } = await supabase.from('employees').insert(data as Record<string, unknown>).select().single();
       return { data: result as Employee, error };
     } catch (err: unknown) {
       return { data: null, error: err instanceof Error ? err.message : 'Erreur' };
@@ -199,11 +175,9 @@ export const employeesService = {
   },
   
   async getAll(): Promise<{ data: Employee[]; error: unknown }> {
+    if (!isConfigured()) return { data: [], error: 'Supabase not configured' };
     try {
-      const { data, error } = await supabase
-        .from('employees')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data, error } = await supabase.from('employees').select('*').order('created_at', { ascending: false });
       return { data: (data || []) as Employee[], error };
     } catch (err: unknown) {
       return { data: [], error: err instanceof Error ? err.message : 'Erreur' };
@@ -211,11 +185,9 @@ export const employeesService = {
   },
   
   async delete(id: string): Promise<{ success: boolean; error: unknown }> {
+    if (!isConfigured()) return { success: false, error: 'Supabase not configured' };
     try {
-      const { error } = await supabase
-        .from('employees')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('employees').delete().eq('id', id);
       return { success: !error, error: error?.message || null };
     } catch (err: unknown) {
       return { success: false, error: err instanceof Error ? err.message : 'Erreur' };
@@ -225,12 +197,9 @@ export const employeesService = {
 
 export const parcellesService = {
   async create(data: Omit<Parcelle, 'id' | 'created_at'>): Promise<{ data: Parcelle | null; error: unknown }> {
+    if (!isConfigured()) return { data: null, error: 'Supabase not configured' };
     try {
-      const { data: result, error } = await supabase
-        .from('parcelles')
-        .insert(data as Record<string, unknown>)
-        .select()
-        .single();
+      const { data: result, error } = await supabase.from('parcelles').insert(data as Record<string, unknown>).select().single();
       return { data: result as Parcelle, error };
     } catch (err: unknown) {
       return { data: null, error: err instanceof Error ? err.message : 'Erreur' };
@@ -238,11 +207,9 @@ export const parcellesService = {
   },
   
   async getAll(): Promise<{ data: Parcelle[]; error: unknown }> {
+    if (!isConfigured()) return { data: [], error: 'Supabase not configured' };
     try {
-      const { data, error } = await supabase
-        .from('parcelles')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data, error } = await supabase.from('parcelles').select('*').order('created_at', { ascending: false });
       return { data: (data || []) as Parcelle[], error };
     } catch (err: unknown) {
       return { data: [], error: err instanceof Error ? err.message : 'Erreur' };
@@ -250,11 +217,9 @@ export const parcellesService = {
   },
   
   async delete(id: string): Promise<{ success: boolean; error: unknown }> {
+    if (!isConfigured()) return { success: false, error: 'Supabase not configured' };
     try {
-      const { error } = await supabase
-        .from('parcelles')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('parcelles').delete().eq('id', id);
       return { success: !error, error: error?.message || null };
     } catch (err: unknown) {
       return { success: false, error: err instanceof Error ? err.message : 'Erreur' };

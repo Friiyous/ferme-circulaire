@@ -8,7 +8,7 @@ import {
 import { PlusOutlined, DeleteOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as ReTooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { getProductionOeufs, mockAnimaux, mockTransactions } from '@/lib/mockData';
+import { getProductionOeufs } from '@/lib/mockData';
 import { especeConfig, colors } from '@/lib/theme';
 import type { Animal, StatutAnimal } from '@/types';
 import { AnimalCard } from '@/components/elevage/AnimalCard';
@@ -63,17 +63,8 @@ export default function ElevagePage() {
     // 1. TOUJOURS charger localStorage d'abord (source de vérité)
     let local = loadLocal();
     
-    // 2. Si localStorage vide ET pas de forçage, creer seulement si premier lancement
-    // Pour eviter que les donnees supprimées reviennent, on ne recharge plus automatiquement depuis mock
-    // L'utilisateur doit explicitly reinitialiser via le bouton "Reinitialiser" si besoin
-    if (local.length === 0 && forceReset) {
-      local = mockAnimaux.slice(0, 3).map((a, i) => ({
-        ...a,
-        id: `seed-${Date.now()}-${i}`,
-        code: a.code || `AN-${String(i + 1).padStart(4, '0')}`,
-      }));
-      saveLocal(local);
-    }
+    // PLUS de rechargement automatique depuis mock
+    // Si vide, on laisse vide pour que l'utilisateur ajoute ses donnees
     
     setData(local);
     

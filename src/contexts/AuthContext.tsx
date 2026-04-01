@@ -13,7 +13,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  loading: true,
+  loading: false,
   signIn: async () => ({ error: null }),
   signOut: async () => {},
   signUp: async () => ({ error: null }),
@@ -21,9 +21,15 @@ const AuthContext = createContext<AuthContextType>({
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Si Supabase non configuré, ne pas tenter de connexion
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     // Check current session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -40,22 +46,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    if (!supabase) return { error: null as any };
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     return { error };
   };
 
   const signOut = async () => {
+    if (!supabase) return;
     await supabase.auth.signOut();
   };
 
   const signUp = async (email: string, password: string) => {
+    if (!supabase) return { error: null as any };
     const { error } = await supabase.auth.signUp({ 
       email, 
       password,
       options: {
-        data: {
-          role: 'user'
-        }
+        data: { role: 'user' }
       }
     });
     return { error };

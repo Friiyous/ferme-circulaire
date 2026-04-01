@@ -1,11 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { Form, Input, Button, Card, Typography, message, Space, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Card, Typography, message, Space, Divider } from 'antd';
+import { UserOutlined, LockOutlined, MailOutlined, HomeOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabase';
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -19,12 +20,12 @@ export default function LoginPage() {
       if (isSignup) {
         const { error } = await signUp(values.email, values.password);
         if (error) throw error;
-        message.success('Compte créé ! Connectez-vous maintenant.');
+        message.success('Compte cree ! Connectez-vous maintenant.');
         setIsSignup(false);
       } else {
         const { error } = await signIn(values.email, values.password);
         if (error) throw error;
-        message.success('Connexion réussie !');
+        message.success('Connexion reussie !');
         router.push('/dashboard');
       }
     } catch (error: unknown) {
@@ -33,6 +34,15 @@ export default function LoginPage() {
     }
     setLoading(false);
   };
+
+  const handleDemoLogin = () => {
+    // Mode demo - connexion sans Supabase
+    message.info('Mode demo active');
+    router.push('/dashboard');
+  };
+
+  // Verifier si Supabase est configure
+  const isSupabaseConfigured = supabase !== null;
 
   return (
     <div style={{
@@ -46,8 +56,8 @@ export default function LoginPage() {
       <Card 
         style={{ 
           width: '100%', 
-          maxWidth: 420, 
-          borderRadius: 16, 
+          maxWidth: 440, 
+          borderRadius: 20, 
           boxShadow: '0 20px 60px rgba(0,0,0,0.3)' 
         }}
         bodyStyle={{ padding: 40 }}
@@ -64,14 +74,15 @@ export default function LoginPage() {
             justifyContent: 'center',
             fontSize: 40,
             marginBottom: 16,
+            boxShadow: '0 8px 24px rgba(82, 196, 26, 0.4)',
           }}>
             🌿
           </div>
-          <Title level={3} style={{ margin: 0, color: '#1A3320' }}>
+          <Title level={3} style={{ margin: 0, color: '#1A3320', fontWeight: 700 }}>
             Ferme Circulaire
           </Title>
-          <Text type="secondary">
-            {isSignup ? 'Créer un compte' : 'Connexion à votre espace'}
+          <Text type="secondary" style={{ fontSize: 14 }}>
+            {isSignup ? 'Creer un compte' : 'Connexion a votre espace'}
           </Text>
         </div>
 
@@ -93,6 +104,7 @@ export default function LoginPage() {
             <Input 
               prefix={<MailOutlined style={{ color: '#8A8A8A' }} />} 
               placeholder="Email" 
+              style={{ borderRadius: 10, height: 48 }}
             />
           </Form.Item>
 
@@ -100,20 +112,15 @@ export default function LoginPage() {
             name="password"
             rules={[
               { required: true, message: 'Entrez votre mot de passe' },
-              { min: 6, message: 'Minimum 6 caractères' }
+              { min: 6, message: 'Minimum 6 caracteres' }
             ]}
           >
             <Input.Password 
               prefix={<LockOutlined style={{ color: '#8A8A8A' }} />} 
               placeholder="Mot de passe" 
+              style={{ borderRadius: 10, height: 48 }}
             />
           </Form.Item>
-
-          {!isSignup && (
-            <Form.Item name="remember" valuePropName="checked">
-              <Checkbox>Se souvenir de moi</Checkbox>
-            </Form.Item>
-          )}
 
           <Form.Item>
             <Button 
@@ -123,12 +130,14 @@ export default function LoginPage() {
               block
               style={{ 
                 height: 48, 
-                borderRadius: 8,
+                borderRadius: 10,
                 fontSize: 16,
                 fontWeight: 600,
+                background: 'linear-gradient(135deg, #2D7D32, #52C41A)',
+                border: 'none',
               }}
             >
-              {isSignup ? 'Créer le compte' : 'Se connecter'}
+              {isSignup ? 'Creer le compte' : 'Se connecter'}
             </Button>
           </Form.Item>
         </Form>
@@ -137,30 +146,66 @@ export default function LoginPage() {
         <div style={{ textAlign: 'center', marginTop: 16 }}>
           <Space>
             <Text type="secondary">
-              {isSignup ? 'Déjà un compte ?' : 'Pas de compte ?'}
+              {isSignup ? 'Deja un compte ?' : 'Pas de compte ?'}
             </Text>
             <Button 
               type="link" 
               onClick={() => setIsSignup(!isSignup)}
-              style={{ padding: 0 }}
+              style={{ padding: 0, color: '#2D7D32' }}
             >
-              {isSignup ? 'Se connecter' : 'Créer un compte'}
+              {isSignup ? 'Se connecter' : 'Creer un compte'}
             </Button>
           </Space>
         </div>
 
-        {/* Demo hint */}
-        <div style={{ 
-          marginTop: 24, 
-          padding: 16, 
-          background: '#F0F5F0', 
-          borderRadius: 8,
-          textAlign: 'center'
-        }}>
-          <Text type="secondary" style={{ fontSize: 12 }}>
-            💡 Pour tester, vous pouvez créer un compte avec votre email
-          </Text>
-        </div>
+        {/* Demo mode - si Supabase non configure */}
+        {!isSupabaseConfigured && (
+          <>
+            <Divider>
+              <Text type="secondary" style={{ fontSize: 12 }}>OU</Text>
+            </Divider>
+            <Button 
+              block 
+              icon={<HomeOutlined />}
+              onClick={handleDemoLogin}
+              style={{ 
+                height: 44, 
+                borderRadius: 10,
+                borderColor: '#2D7D32',
+                color: '#2D7D32',
+              }}
+            >
+              Mode Demonstration
+            </Button>
+            <div style={{ 
+              marginTop: 16, 
+              padding: 12, 
+              background: '#FFF8E1', 
+              borderRadius: 10,
+              textAlign: 'center'
+            }}>
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                🔧 Base de donnees non connectee. Utilisez le mode demo pour tester.
+              </Text>
+            </div>
+          </>
+        )}
+
+        {/* Info si configure */}
+        {isSupabaseConfigured && (
+          <div style={{ 
+            marginTop: 24, 
+            padding: 16, 
+            background: '#F6FFED', 
+            borderRadius: 10,
+            textAlign: 'center',
+            border: '1px solid #D9F7BE',
+          }}>
+            <Text type="secondary" style={{ fontSize: 12 }}>
+              🔐 Connexion securisee via Supabase
+            </Text>
+          </div>
+        )}
       </Card>
     </div>
   );

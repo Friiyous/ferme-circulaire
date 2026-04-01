@@ -1,0 +1,88 @@
+/* =============================================
+   ANT DESIGN THEME - Pre-built CSS Variables
+   Ce fichier contient les variables CSS pour éviter
+   le flash de contenu non stylisé (FOUC)
+   ============================================= */
+
+/* Variables CSS pour le thème Ferme Circulaire */
+:root {
+  --ant-color-primary: #2D7D32;
+  --ant-color-success: #52C41A;
+  --ant-color-warning: #FA8C16;
+  --ant-color-error: #FF4D4F;
+  --ant-color-info: #1677FF;
+  
+  --ant-border-radius: 8px;
+  --ant-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  
+  --ant-bg-container: #FFFFFF;
+  --ant-bg-layout: #F0F5F0;
+  --ant-bg-base: #FFFFFF;
+  
+  --ant-border-color: #D9E8D9;
+  --ant-border-color-split: #E8F5E9;
+  
+  --ant-text-color: #1A2E1A;
+  --ant-text-color-secondary: #5A7A5A;
+  
+  --ant-layout-sider-bg: #1A3320;
+  --ant-layout-header-bg: #FFFFFF;
+  --ant-layout-body-bg: #F0F5F0;
+  
+  --ant-menu-dark-bg: #1A3320;
+  --ant-menu-dark-item-bg: #1A3320;
+  --ant-menu-dark-item-color: #B8D4B8;
+  --ant-menu-dark-item-selected-bg: #2D7D32;
+  --ant-menu-dark-item-selected-color: #FFFFFF;
+}
+
+/* Application immédiate des couleurs */
+body {
+  background-color: var(--ant-bg-layout) !important;
+  font-family: var(--ant-font-family) !important;
+}
+
+/* Layout sidebar - applied immediately */
+.ant-layout-sider {
+  background: var(--ant-layout-sider-bg) !important;
+}
+
+/* Layout header - applied immediately */
+.ant-layout-header {
+  background: var(--ant-layout-header-bg) !important;
+}
+
+/* Cards - applied immediately */
+.ant-card {
+  border-radius: var(--ant-border-radius) !important;
+}
+
+/* Buttons - applied immediately */
+.ant-btn-primary {
+  background: var(--ant-color-primary) !important;
+  border-color: var(--ant-color-primary) !important;
+}
+
+/* Progress bars */
+.ant-progress-inner .ant-progress-bg {
+  background: var(--ant-color-primary) !important;
+}
+
+/* Tags */
+.ant-tag {
+  border-radius: 6px !important;
+}
+
+/* Animation de transition */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Désactiver les transitions pour les éléments qui n'en ont pas besoin */
+.ant-spin,
+.ant-skeleton,
+.ant-loading-spin {
+  transition: none !important;
+}

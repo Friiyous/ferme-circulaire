@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌿 Ferme Circulaire - Gestion Agricole
 
-## Getting Started
+Application de gestion de ferme circulaire intégrée développée avec Next.js, TypeScript et Supabase.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Supabase](https://img.shields.io/badge/Supabase-3-green)
+
+## 🚀 Déploiement sur Vercel
+
+### Prérequis
+- Compte [Vercel](https://vercel.com)
+- Projet Supabase (optionnel pour mode local)
+
+### Étapes de déploiement
+
+1. **Pousser le code sur GitHub**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit - Ferme Circulaire"
+   git branch -M main
+   git remote add origin https://github.com/votre-compte/ferme-circulaire.git
+   git push -u origin main
+   ```
+
+2. **Importer sur Vercel**
+   - Allez sur https://vercel.com
+   - Cliquez "Add New..." → "Project"
+   - Importez votre dépôt GitHub
+   - Configurez:
+     - Framework Preset: **Next.js**
+     - Build Command: `next build` (déjà configuré)
+     - Output Directory: `.next` (par défaut)
+
+3. **Variables d'environnement**
+   Dans Vercel, ajoutez ces variables:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=votre_url_supabase
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=votre_clé_anon
+   ```
+
+4. **Déployer**
+   - Cliquez "Deploy" et attendez le build
+   - Votre app sera live sur `https://ferme-circulaire.vercel.app`
+
+## 🏠 Mode Local
 
 ```bash
+# Installer les dépendances
+npm install
+
+# Copier les variables d'environnement
+cp .env.example .env.local
+# Remplir les valeurs dans .env.local
+
+# Lancer en développement
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrez http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📱 Fonctionnalités
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Élevage**: Gestion des animaux (poules, porcs, etc.)
+- **Cultures**: Suivi des parcelles et productions
+- **Valorisation**: Biogaz, compost, recyclage
+- **Alimentation**: Fabrication d'aliments pour bétail
+- **Finances**: Suivi des revenus et dépenses
+- **Ressources Humaines**: Gestion de l'équipe
+- **Rapports**: KPIs et statistiques
+- **IoT**: Relevés automatiques (capteurs)
+- **Planning**: Calendrier des activités
 
-## Learn More
+## 🛠️ Technologies
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend**: Next.js 14, React, TypeScript, Ant Design
+- **Backend**: Supabase (PostgreSQL, Auth, Realtime)
+- **Charts**: Recharts
+- **State**: React Context + localStorage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT

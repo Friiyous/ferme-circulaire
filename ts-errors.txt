@@ -1,0 +1,46 @@
+src/app/(main)/cultures/page.tsx(59,21): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ pluvial: string; goutte: string; aspersion: string; manuel: string; }'.
+src/app/(main)/cultures/page.tsx(113,34): error TS2322: Type '{ parcelles: any; }' is not assignable to type 'IntrinsicAttributes & CropRotationPlannerProps'.
+  Property 'parcelles' does not exist on type 'IntrinsicAttributes & CropRotationPlannerProps'. Did you mean 'parcelleId'?
+src/app/(main)/cultures/page.tsx(125,30): error TS2322: Type '(v: number) => string' is not assignable to type 'Formatter<ValueType, NameType> & ((value: ValueType, name: NameType, item: TooltipPayloadEntry, index: number, payload: TooltipPayload) => ReactNode | [...])'.
+  Type '(v: number) => string' is not assignable to type 'Formatter<ValueType, NameType>'.
+    Types of parameters 'v' and 'value' are incompatible.
+      Type 'ValueType | undefined' is not assignable to type 'number'.
+        Type 'undefined' is not assignable to type 'number'.
+src/app/(main)/dashboard/page.tsx(126,28): error TS2322: Type '(v: number) => string' is not assignable to type 'Formatter<ValueType, NameType> & ((value: ValueType, name: NameType, item: TooltipPayloadEntry, index: number, payload: TooltipPayload) => ReactNode | [...])'.
+  Type '(v: number) => string' is not assignable to type 'Formatter<ValueType, NameType>'.
+    Types of parameters 'v' and 'value' are incompatible.
+      Type 'ValueType | undefined' is not assignable to type 'number'.
+        Type 'undefined' is not assignable to type 'number'.
+src/app/(main)/dashboard/page.tsx(143,28): error TS2322: Type '(v: number) => string' is not assignable to type 'Formatter<ValueType, NameType> & ((value: ValueType, name: NameType, item: TooltipPayloadEntry, index: number, payload: TooltipPayload) => ReactNode | [...])'.
+  Type '(v: number) => string' is not assignable to type 'Formatter<ValueType, NameType>'.
+    Types of parameters 'v' and 'value' are incompatible.
+      Type 'ValueType | undefined' is not assignable to type 'number'.
+        Type 'undefined' is not assignable to type 'number'.
+src/app/(main)/dashboard/page.tsx(158,28): error TS2322: Type '(v: number) => string' is not assignable to type 'Formatter<ValueType, NameType> & ((value: ValueType, name: NameType, item: TooltipPayloadEntry, index: number, payload: TooltipPayload) => ReactNode | [...])'.
+  Type '(v: number) => string' is not assignable to type 'Formatter<ValueType, NameType>'.
+    Types of parameters 'v' and 'value' are incompatible.
+      Type 'ValueType | undefined' is not assignable to type 'number'.
+        Type 'undefined' is not assignable to type 'number'.
+src/app/(main)/elevage/page.tsx(312,13): error TS2322: Type '{ animal: Animal; onUpdateSante: () => MessageType; onEditProduction: () => MessageType; }' is not assignable to type 'IntrinsicAttributes & AnimalCardProps'.
+  Property 'onUpdateSante' does not exist on type 'IntrinsicAttributes & AnimalCardProps'.
+src/app/(main)/valorisation/page.tsx(108,44): error TS2339: Property 'mixte' does not exist on type '{ chaud: string; froid: string; vermi: string; }'.
+src/components/elevage/AnimalCard.tsx(62,32): error TS18048: 'animal.vaccinations' is possibly 'undefined'.
+src/components/finances/FinancialReport.tsx(82,59): error TS2339: Property 'moduleConcerne' does not exist on type 'Transaction'.
+src/components/finances/FinancialReport.tsx(86,30): error TS2339: Property 'moduleConcerne' does not exist on type 'Transaction'.
+src/components/finances/FinancialReport.tsx(152,40): error TS2304: Cannot find name 'PlusOutlined'.
+src/components/finances/FinancialReport.tsx(190,92): error TS2304: Cannot find name 'Tag'.
+src/components/finances/FinancialReport.tsx(190,101): error TS2304: Cannot find name 'Tag'.
+src/components/MainLayout.tsx(9,3): error TS2724: '"@ant-design/icons"' has no exported member named 'LeafOutlined'. Did you mean 'LeftOutlined'?
+src/components/rh/SuiviTaches.tsx(71,97): error TS1117: An object literal cannot have multiple properties with the same name.
+src/components/stocks/StockManager.tsx(59,67): error TS2339: Property 'unitePrix' does not exist on type 'StockIntrant'.
+src/components/stocks/StockManager.tsx(110,43): error TS2339: Property 'uniteMesure' does not exist on type 'StockIntrant'.
+src/components/stocks/StockManager.tsx(132,81): error TS2339: Property 'unitePrix' does not exist on type 'StockIntrant'.
+src/components/stocks/StockManager.tsx(134,21): error TS2339: Property 'unitePrix' does not exist on type 'StockIntrant'.
+src/components/stocks/StockManager.tsx(134,45): error TS2339: Property 'uniteMesure' does not exist on type 'StockIntrant'.
+src/components/stocks/StockManager.tsx(234,55): error TS2339: Property 'uniteMesure' does not exist on type 'StockIntrant'.
+src/components/stocks/StockManager.tsx(243,67): error TS2339: Property 'uniteMesure' does not exist on type 'StockIntrant'.
+src/components/stocks/StockManager.tsx(245,51): error TS2339: Property 'unitePrix' does not exist on type 'StockIntrant'.
+src/components/valorisation/BSFTracker.tsx(228,20): error TS2552: Cannot find name 'Alert'. Did you mean 'alert'?
+src/components/valorisation/BSFTracker.tsx(286,12): error TS2552: Cannot find name 'Alert'. Did you mean 'alert'?
+src/components/weather/WeatherWidget.tsx(7,3): error TS2724: '"@ant-design/icons"' has no exported member named 'CloudRainOutlined'. Did you mean 'CloudOutlined'?
+src/lib/theme.ts(61,7): error TS2353: Object literal may only specify known properties, and 'colorBadgeText' does not exist in type 'Partial<ComponentToken> & Partial<AliasToken> & { algorithm?: boolean | MappingAlgorithm | MappingAlgorithm[] | undefined; }'.

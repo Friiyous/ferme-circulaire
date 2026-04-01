@@ -1,0 +1,22 @@
+{
+  "name": "Ferme Circulaire",
+  "short_name": "FermeCI",
+  "description": "Application de gestion pour ferme circulaire en Côte d'Ivoire",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5FAF5",
+  "theme_color": "#2D7D32",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "fr-FR",
+  "scope": "/",
+  "prefer_related_applications": false
+}

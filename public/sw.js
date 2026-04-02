@@ -1,5 +1,5 @@
 // Service Worker for PWA - Offline support
-const CACHE_NAME = 'ferme-circulaire-v1';
+const CACHE_NAME = 'ferme-circulaire-v2.5';
 const urlsToCache = [
   '/',
   '/dashboard',
@@ -9,6 +9,7 @@ const urlsToCache = [
   '/alimentation',
   '/finances',
   '/rh',
+  '/manifest.json',
 ];
 
 self.addEventListener('install', (event) => {

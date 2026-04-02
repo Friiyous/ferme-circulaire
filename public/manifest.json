@@ -13,10 +13,40 @@
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "categories": ["business", "productivity"],
   "lang": "fr-FR",
   "scope": "/",
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "/dashboard",
+      "description": "Tableau de bord principal"
+    },
+    {
+      "name": "Élevage",
+      "url": "/elevage",
+      "description": "Gestion du cheptel"
+    },
+    {
+      "name": "Finances",
+      "url": "/finances",
+      "description": "Suivi des transactions"
+    }
+  ]
 }

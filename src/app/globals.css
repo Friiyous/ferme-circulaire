@@ -130,7 +130,7 @@ html, body {
    ============================================= */
 
 /* Tablette et mobile */
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   /* Sidebar cachee par defaut */
   .ant-layout-sider {
     transform: translateX(-100%) !important;
@@ -169,6 +169,11 @@ html, body {
   /* Bouton hamburger visible sur mobile */
   .mobile-menu-btn {
     display: flex !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   
   /* Contenu avec marge adaptee */

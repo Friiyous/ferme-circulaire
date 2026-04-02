@@ -216,7 +216,6 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               icon={<MenuOutlined style={{ fontSize: 20 }} />}
               onClick={() => setMobileMenuOpen(true)}
               className="mobile-menu-btn"
-              style={{ display: 'none', width: 40, height: 40 }}
             />
             {activeItem && (
               <div style={{
